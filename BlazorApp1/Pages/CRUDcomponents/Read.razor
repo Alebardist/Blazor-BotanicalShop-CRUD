@@ -1,0 +1,43 @@
+﻿<hr />
+<h3>Read</h3>
+
+<div class="read-section">
+    <h4>Records in DB, collection: Botanical</h4>
+    <button @onclick="RefreshRecords">
+        Update items
+    </button>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>GoodsName</th>
+            <th>Price</th>
+            <th>PriceSale</th>
+            <th>BuyCount</th>
+        </tr>
+        @foreach (var item in _goodsContainer)
+        {
+            <tr>
+                <th>@item.Id</th>
+                <th>@item.GoodsName</th>
+                <th>@item.Price</th>
+                <th>@item.PriceSale</th>
+                <th>@item.BuyCount</th>
+            </tr>
+        }
+    </table>
+</div>
+
+@code {
+    private List<Goods> _goodsContainer = new List<Goods>();
+
+    public Read()
+    {
+        _goodsContainer = new CrudOperator().ReadAll();
+    }
+
+    private void RefreshRecords()
+    {
+        _goodsContainer = new CrudOperator().ReadAll();
+    }
+
+}

@@ -1,0 +1,82 @@
+﻿@inject ICrudOperator InjectedOperator 
+
+<h3>Showcase</h3>
+
+<div class="row">
+
+    @foreach (var goodsItem in _goodsList)
+    {
+        <div class="col-12 col-sm-6 col-lg-4 featureCol mb-7">
+            <div class="border">
+                <div class="imgHolder position-relative w-100 overflow-hidden">
+                    <img src="@goodsItem.GoodsImageLocation" alt="@goodsItem.GoodsName" class="img-fluid w-100">
+                    <ul class="list-unstyled postHoverLinskList d-flex justify-content-center m-0">
+                        <li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-heart d-block"></a></li>
+                        <li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-cart d-block"></a></li>
+                        <li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-eye d-block"></a></li>
+                        <li class="overflow-hidden"><a href="javascript:void(0);" class="icon-arrow d-block"></a></li>
+                    </ul>
+                </div>
+                <div class="text-center py-5 px-4">
+                    <span class="title d-block mb-2"><a href="shop-detail.html">name</a></span>
+                    @if (goodsItem.PriceSale > 0)
+                    {
+                        <span class="price d-block fwEbold"><del>@goodsItem.Price $</del>@goodsItem.PriceSale $</span>
+                    }
+                    else
+                    {
+                        <span class="price d-block fwEbold">@goodsItem.Price</span>
+                    }
+                    @foreach (string TagItem in goodsItem.Tags)
+                    {
+                        <span class="hotOffer fwEbold text-uppercase text-white position-absolute d-block">TagItem</span>
+                        <span class="hotOffer green fwEbold text-uppercase text-white position-absolute d-block ml-8">TagItem</span>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- example product -->
+    <div class="col-12 col-sm-6 col-lg-4 featureCol mb-7">
+        <div class="border">
+            <div class="imgHolder position-relative w-100 overflow-hidden">
+                <img src="http://placehold.it/270x300" alt="image description" class="img-fluid w-100">
+                <ul class="list-unstyled postHoverLinskList d-flex justify-content-center m-0">
+                    <li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-heart d-block"></a></li>
+                    <li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-cart d-block"></a></li>
+                    <li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-eye d-block"></a></li>
+                    <li class="overflow-hidden"><a href="javascript:void(0);" class="icon-arrow d-block"></a></li>
+                </ul>
+            </div>
+            <div class="text-center py-5 px-4">
+                <span class="title d-block mb-2"><a href="shop-detail.html">example product</a></span>
+                <span class="price d-block fwEbold"><del>80.50 $</del>68.00 $</span>
+                <span class="hotOffer fwEbold text-uppercase text-white position-absolute d-block">HOT</span>
+                <span class="hotOffer green fwEbold text-uppercase text-white position-absolute d-block ml-8">Sale</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- pagination -->
+    <div class="col-12 pt-3 mb-lg-0 mb-md-6 mb-3">
+        <ul class="list-unstyled pagination d-flex justify-content-center align-items-end">
+            <li><a href="javascript:void(0);"><i class="fas fa-chevron-left"></i></a></li>
+            <li class="active"><a href="javascript:void(0);">1</a></li>
+            <li><a href="javascript:void(0);">2</a></li>
+            <li>...</li>
+            <li><a href="javascript:void(0);"><i class="fas fa-chevron-right"></i></a></li>
+        </ul>
+    </div>
+</div>
+
+@code { 
+    private IReadOnlyCollection<Goods> _goodsList;
+
+    protected override void OnInitialized()
+    {
+        _goodsList = InjectedOperator.ReadAll();
+    }
+}

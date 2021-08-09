@@ -1,0 +1,64 @@
+﻿<div class="create-section">
+    <h4>
+        Create section
+    </h4>
+    <div>
+        <div class="Input-field-header">
+            GoodsName
+        </div>
+        <input type="text" name="Name" @bind-value="@_goodsToAdd.GoodsName" />
+    </div>
+    <div>
+        <div class="Input-field-header">
+            price
+        </div>
+        <input type="text" name="Text" @bind-value="@_goodsToAdd.Price" />
+    </div>
+    <div>
+        <div class="Input-field-header">
+            price sale
+        </div>
+        <input type="text" name="Text" @bind-value="@_goodsToAdd.PriceSale" />
+    </div>
+
+    <div>
+        <div class="Input-field-header">
+            categorie
+        </div>
+        <input type="text" name="Text" @bind-value="@_goodsToAdd.Categorie" />
+    </div>
+    <div>
+        <div class="Input-field-header">
+            buy count
+        </div>
+        <input type="text" name="Text" @bind-value="@_goodsToAdd.BuyCount" />
+    </div>
+    <div>
+        <div class="Input-field-header">
+            <div>tags</div>
+            @{
+                _goodsToAdd.Tags = new string[2] { "tag1", "tag2" }; 
+             }
+        </div>
+    </div>
+    <div>
+        <div class="Input-field-header">
+            img location
+        </div>
+        <input type="text" name="Text" @bind-value="@_goodsToAdd.GoodsImageLocation" />
+    </div>
+
+    <input type="button" value="Create" @onclick="CallOperator" />
+</div>
+
+
+@code {
+    private Goods _goodsToAdd;
+
+    public Create()
+    {
+        _goodsToAdd = new Goods();
+    }
+
+    private void CallOperator() => new CrudOperator().Create(_goodsToAdd);
+}

@@ -1,0 +1,67 @@
+﻿@using MongoDB.Bson;
+
+<hr />
+<h3>Update</h3>
+
+<div class="update-section">
+
+    @foreach (var item in _objectIdContainer)
+    {
+        <div class="target" @onclick="()=>setObjectIdAndGoods(item)">@item</div>
+    }
+
+    <EditForm Model="@_goodsToUpdate">
+        <InputSelect @bind-Value="_fieldToChange">
+            <option selected>GoodsName</option>
+            <option>Categorie</option>
+            <option>BuyCount</option>
+            <option>Price</option>
+            <option>PriceSale</option>
+        </InputSelect>
+    </EditForm>
+
+    <input type="text" name="name" @bind-value="_value" placeholder="value" />
+
+    <div class="current-object">
+        <table>
+            <thead>Current object</thead>
+            <tr>
+                <th>@_goodsToUpdate.Id</th>
+                <th>@_goodsToUpdate.GoodsName</th>
+                <th>@_goodsToUpdate.Price</th>
+                <th>@_goodsToUpdate.PriceSale</th>
+                <th>@_goodsToUpdate.BuyCount</th>
+            </tr>
+        </table>
+    </div>
+
+    <button @onclick="UpdateField">
+        Update
+    </button>
+
+</div>
+
+@code {
+    private MongoDB.Bson.ObjectId _objectId;
+    private List<MongoDB.Bson.ObjectId> _objectIdContainer = new List<MongoDB.Bson.ObjectId>();
+    private Goods _goodsToUpdate = new Goods();
+    private string _fieldToChange = "";
+    private string _value = null;
+
+    protected override void OnInitialized()
+    {
+        _objectIdContainer = new CrudOperator().ReadAllIDs();
+    }
+
+    private void setObjectIdAndGoods(ObjectId id)
+    {
+        _objectId = id;
+        _goodsToUpdate = new CrudOperator().ReadById(_objectId);
+    }
+
+    private void UpdateField()
+    {
+        new CrudOperator().Update(_objectId, _fieldToChange, _value);
+    }
+
+}

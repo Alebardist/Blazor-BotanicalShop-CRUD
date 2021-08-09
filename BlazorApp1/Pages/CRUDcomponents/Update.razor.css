@@ -1,0 +1,15 @@
+﻿body {
+}
+
+.target{
+    max-width: 400px;
+}
+
+    .target:hover{
+        background-color: dodgerblue;
+    }
+
+    .target:focus {
+        background-color: dodgerblue;
+    }
+
