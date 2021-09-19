@@ -1,4 +1,5 @@
 ﻿@using MongoDB.Bson;
+@inject IConfiguration conf
 
 <hr />
 <h3>Update</h3>
@@ -50,18 +51,17 @@
 
     protected override void OnInitialized()
     {
-        _objectIdContainer = new CrudOperator().ReadAllIDs();
+        _objectIdContainer = new CrudOperator(conf).ReadAllIDs();
     }
 
     private void setObjectIdAndGoods(ObjectId id)
     {
         _objectId = id;
-        _goodsToUpdate = new CrudOperator().ReadById(_objectId);
+        _goodsToUpdate = new CrudOperator(conf).ReadById(_objectId);
     }
 
     private void UpdateField()
     {
-        new CrudOperator().Update(_objectId, _fieldToChange, _value);
+        new CrudOperator(conf).Update(_objectId, _fieldToChange, _value);
     }
-
 }

@@ -2,36 +2,35 @@
 @model BlazorApp.Pages._HostModel
 @using BlazorApp
 
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Botanical - HTML5 Ecommerce Template</title>
-    <!-- set the encoding of your site -->
-    <meta charset="utf-8">
-    <!-- set the Compatible of your site -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- set the page title -->
-    <!-- include the site Google Fonts stylesheet -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700%7CRoboto:300,400,500,700,900&display=swap" rel="stylesheet">
-    <link href="BlazorApp.styles.css" rel="stylesheet" />
-</head>
-<body>
-    <h1>main page</h1>
-    <app>
-        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
-    </app>
+    <head>
+        <title>Botanical - HTML5 Ecommerce Template</title>
+        <!-- set the encoding of your site -->
+        <meta charset="utf-8">
+        <!-- set the Compatible of your site -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- set the page title -->
+        <!-- include the site Google Fonts stylesheet -->
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700%7CRoboto:300,400,500,700,900&display=swap" rel="stylesheet">
+        <link href="BlazorApp.styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>main page</h1>
+        <app>
+            @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
+        </app>
 
-    <!-- include jQuery library -->
-    <script src="/js/jquery-3.4.1.min.js"></script>
-    <!-- include bootstrap popper JavaScript -->
-    <script src="/js/popper.min.js"></script>
-    <!-- include bootstrap JavaScript -->
-    <script src="/js/bootstrap.min.js"></script>
-    <!-- include custom JavaScript -->
-    <script src="/js/jqueryCustome.js"></script>
+        <!-- include jQuery library -->
+        <script src="/js/jquery-3.4.1.min.js"></script>
+        <!-- include bootstrap popper JavaScript -->
+        <script src="/js/popper.min.js"></script>
+        <!-- include bootstrap JavaScript -->
+        <script src="/js/bootstrap.min.js"></script>
+        <!-- include custom JavaScript -->
+        <script src="/js/jqueryCustome.js"></script>
 
-    <script src="_framework/blazor.server.js"></script>
-</body>
+        <script src="_framework/blazor.server.js"></script>
+    </body>
 </html>

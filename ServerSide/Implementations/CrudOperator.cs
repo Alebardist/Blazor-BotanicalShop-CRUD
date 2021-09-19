@@ -1,6 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
+
+using Microsoft.Extensions.Configuration;
+
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -13,34 +15,32 @@ namespace ServerSide
         private readonly IMongoDatabase _mongoDatabase;
         private IMongoCollection<Goods> _mongoCollection;
 
-        public CrudOperator(string collectionName = "Botanical", string dbName = "TestDB")
+        public CrudOperator(IConfiguration configuration)
         {
-            MongoClient mongoClient = new MongoClient();
-            CollectionName = collectionName;
+            MongoClient mongoClient = new();
 
-            _mongoDatabase = mongoClient.GetDatabase(dbName);
-            _mongoCollection = _mongoDatabase.GetCollection<Goods>(CollectionName);
+            _mongoDatabase = mongoClient.GetDatabase(configuration.GetSection("MongoDB:dbName").Value);
+            _mongoCollection = _mongoDatabase.GetCollection<Goods>(configuration.GetSection("MongoDB:collectionName").Value);
 
             Debug.WriteLine("//// CRUD ctor OK");
         }
 
-        public async void Create(Goods type)
+        public async void CreateAsync(Goods type)
         {
             await _mongoCollection.InsertOneAsync(type);
             Debug.WriteLine("create execute");
         }
 
-        public List<Goods> Read(string bsonFilter)
+        public List<Goods> GetGoods(string bsonFilter)
         {
             RefreshCollection();
-            Debug.WriteLine("Read execute");
+            Debug.WriteLine("Read executed");
 
             return _mongoCollection.Find(bsonFilter).ToList();
-
         }
 
 
-        //TODO: to optimize thq query, need to get ONLY IDs, 
+        //TODO: to optimize this query, i need to get ONLY IDs, 
         //but new BsonDocument("{}", "{roll:1, _id:1}") doesn't work
         /// <summary>
         /// Use to get list of IDs
@@ -53,22 +53,22 @@ namespace ServerSide
 
             List<Goods> goodsContainer = ReadAll();
 
-            return FillUpIDList(goodsContainer);
+            return GetAllIDs(goodsContainer);
         }
 
         public Goods ReadById(ObjectId id)
         {
             RefreshCollection();
-            Goods article = _mongoCollection.Find(x => x.Id == id).FirstOrDefault();
+            Goods goods = _mongoCollection.Find(x => x.Id == id).FirstOrDefault();
             Debug.WriteLine("ReadById execute");
 
-            return article ?? new Goods();
+            return goods ?? new Goods();
         }
 
         /// <summary>
         /// Gets all documents from collection
         /// </summary>
-        /// <param name="count">max elements, by default - 1000 records</param>
+        /// <param name="count">max documents, by default - 1000 records</param>
         /// <returns></returns>
         public List<Goods> ReadAll(int count = 1000)
         {
@@ -86,14 +86,12 @@ namespace ServerSide
 
             await _mongoCollection.UpdateOneAsync(x => x.Id == id, update);
             Debug.WriteLine("Update execute");
-
         }
 
         public async void Delete(ObjectId id)
         {
             await _mongoCollection.DeleteOneAsync(x => x.Id == id);
-            Debug.WriteLine("Delete execute");
-
+            Debug.WriteLine("Delete executed");
         }
 
         //TODO: get rid of this by using property: 
@@ -103,16 +101,16 @@ namespace ServerSide
             _mongoCollection = _mongoDatabase.GetCollection<Goods>(CollectionName);
         }
 
-        private List<ObjectId> FillUpIDList(List<Goods> goods)
+        private List<ObjectId> GetAllIDs(List<Goods> goods)
         {
-            List<ObjectId> IDsContainer = new List<ObjectId>();
+            List<ObjectId> IDs = new();
 
             foreach (var item in goods)
             {
-                IDsContainer.Add(item.Id);
+                IDs.Add(item.Id);
             }
 
-            return IDsContainer;
+            return IDs;
         }
     }
 }

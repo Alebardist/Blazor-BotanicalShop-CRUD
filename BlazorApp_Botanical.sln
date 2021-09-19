@@ -1,30 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31019.35
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp", "BlazorApp1\BlazorApp.csproj", "{C7392C61-23D2-4AD5-BE89-F31D62F0FF48}"
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "botanical", "botanical\", "{6BD06A42-3021-438D-894C-4708A76ADC40}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_52123"
-		Debug.AspNetCompiler.PhysicalPath = "botanical\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52123\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_52123"
-		Release.AspNetCompiler.PhysicalPath = "botanical\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52123\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "52123"
-		SlnRelativePath = "botanical\"
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerSide", "ServerSide\ServerSide.csproj", "{1D0DE9CA-2078-4961-9D9B-F52F3F36D2D1}"
 EndProject
@@ -38,10 +17,6 @@ Global
 		{C7392C61-23D2-4AD5-BE89-F31D62F0FF48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7392C61-23D2-4AD5-BE89-F31D62F0FF48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7392C61-23D2-4AD5-BE89-F31D62F0FF48}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BD06A42-3021-438D-894C-4708A76ADC40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BD06A42-3021-438D-894C-4708A76ADC40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BD06A42-3021-438D-894C-4708A76ADC40}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BD06A42-3021-438D-894C-4708A76ADC40}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{1D0DE9CA-2078-4961-9D9B-F52F3F36D2D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D0DE9CA-2078-4961-9D9B-F52F3F36D2D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D0DE9CA-2078-4961-9D9B-F52F3F36D2D1}.Release|Any CPU.ActiveCfg = Release|Any CPU

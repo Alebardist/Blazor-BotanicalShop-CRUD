@@ -1,4 +1,6 @@
-﻿<hr />
+﻿@inject IConfiguration conf
+
+<hr />
 <h3>Read</h3>
 
 <div class="read-section">
@@ -32,12 +34,11 @@
 
     public Read()
     {
-        _goodsContainer = new CrudOperator().ReadAll();
+        RefreshRecords();
     }
 
     private void RefreshRecords()
     {
-        _goodsContainer = new CrudOperator().ReadAll();
+        _goodsContainer = new CrudOperator(conf).ReadAll();
     }
-
 }

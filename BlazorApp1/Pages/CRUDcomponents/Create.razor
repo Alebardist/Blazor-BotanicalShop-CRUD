@@ -1,4 +1,6 @@
-﻿<div class="create-section">
+﻿@inject IConfiguration conf
+
+<div class="create-section">
     <h4>
         Create section
     </h4>
@@ -53,12 +55,7 @@
 
 
 @code {
-    private Goods _goodsToAdd;
+    private Goods _goodsToAdd = new Goods();
 
-    public Create()
-    {
-        _goodsToAdd = new Goods();
-    }
-
-    private void CallOperator() => new CrudOperator().Create(_goodsToAdd);
+    private void CallOperator() => new CrudOperator(conf).CreateAsync(_goodsToAdd);
 }
