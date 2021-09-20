@@ -10,13 +10,13 @@ namespace ServerSide
 {
     public class CrudOperator : ICrudOperator
     {
-        public string CollectionName { get; private set; }
-
         private readonly IMongoDatabase _mongoDatabase;
         private IMongoCollection<Goods> _mongoCollection;
+        private IConfiguration _configuration;
 
         public CrudOperator(IConfiguration configuration)
         {
+            _configuration = configuration;
             MongoClient mongoClient = new();
 
             _mongoDatabase = mongoClient.GetDatabase(configuration.GetSection("MongoDB:dbName").Value);
@@ -39,23 +39,6 @@ namespace ServerSide
             return _mongoCollection.Find(bsonFilter).ToList();
         }
 
-
-        //TODO: to optimize this query, i need to get ONLY IDs, 
-        //but new BsonDocument("{}", "{roll:1, _id:1}") doesn't work
-        /// <summary>
-        /// Use to get list of IDs
-        /// </summary>
-        /// <returns>Generic list of ObjectIds</returns>
-        public List<ObjectId> ReadAllIDs()
-        {
-            RefreshCollection();
-            Debug.WriteLine("Read all IDs execute");
-
-            List<Goods> goodsContainer = ReadAll();
-
-            return GetAllIDs(goodsContainer);
-        }
-
         public Goods ReadById(ObjectId id)
         {
             RefreshCollection();
@@ -72,6 +55,8 @@ namespace ServerSide
         /// <returns></returns>
         public List<Goods> ReadAll(int count = 1000)
         {
+            RefreshCollection();
+
             Debug.WriteLine("ReadAll execute");
 
             return _mongoCollection.Find(x => true).Limit(count).ToList();
@@ -90,27 +75,14 @@ namespace ServerSide
 
         public async void Delete(ObjectId id)
         {
+            RefreshCollection();
             await _mongoCollection.DeleteOneAsync(x => x.Id == id);
             Debug.WriteLine("Delete executed");
         }
 
-        //TODO: get rid of this by using property: 
-        //get=> _mongoDatabase.GetCollection<Goods>(CollectionName);
         private void RefreshCollection()
         {
-            _mongoCollection = _mongoDatabase.GetCollection<Goods>(CollectionName);
-        }
-
-        private List<ObjectId> GetAllIDs(List<Goods> goods)
-        {
-            List<ObjectId> IDs = new();
-
-            foreach (var item in goods)
-            {
-                IDs.Add(item.Id);
-            }
-
-            return IDs;
+            _mongoCollection = _mongoDatabase.GetCollection<Goods>(_configuration.GetSection("MongoDB:collectionName").Value);
         }
     }
 }

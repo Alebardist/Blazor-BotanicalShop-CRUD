@@ -1,6 +1,35 @@
-﻿<h3>Delete</h3>
+﻿@inject IConfiguration conf
+@inject ICrudOperator crudOperations
 
+<h3>Delete</h3>
+<div class="delete-section">
+    <div>
+        <h4>IDs</h4>
+        @{
+            foreach(var item in _goods)
+            {
+                <div>
+                    @item.Id -> @item.GoodsName
+                </div>
+            }
+        }
+    </div>
+    <div>
+        <input type="text" @bind-value="@_idAsText"/>
+        <button @onclick="@DeleteByID">
+            Delete
+        </button>
+    </div>
+</div>
 
 @code {
+    private List<Goods> _goods;
 
+    protected override void OnInitialized()
+    {
+        _goods = crudOperations.GetGoods();
+    }
+
+    private string _idAsText;
+    private void DeleteByID() => crudOperations.Delete(new MongoDB.Bson.ObjectId(_idAsText));
 }

@@ -1,5 +1,6 @@
 ﻿@using MongoDB.Bson;
-@inject IConfiguration conf
+@inject ICrudOperator crudOperations
+
 
 <hr />
 <h3>Update</h3>
@@ -47,21 +48,44 @@
     private List<MongoDB.Bson.ObjectId> _objectIdContainer = new List<MongoDB.Bson.ObjectId>();
     private Goods _goodsToUpdate = new Goods();
     private string _fieldToChange = "";
-    private string _value = null;
+    private string _value = "";
 
     protected override void OnInitialized()
     {
-        _objectIdContainer = new CrudOperator(conf).ReadAllIDs();
+        _objectIdContainer = ReadAllIDs();
     }
 
     private void setObjectIdAndGoods(ObjectId id)
     {
         _objectId = id;
-        _goodsToUpdate = new CrudOperator(conf).ReadById(_objectId);
+        _goodsToUpdate = crudOperations.ReadById(_objectId);
     }
 
     private void UpdateField()
     {
-        new CrudOperator(conf).Update(_objectId, _fieldToChange, _value);
+        crudOperations.Update(_objectId, _fieldToChange, _value);
+    }
+
+    /*
+     *TODO: to optimize this query, i need to get ONLY IDs, 
+     *but new BsonDocument("{}", "{roll:1, _id:1}") doesn't work
+    */
+    private List<ObjectId> ReadAllIDs()
+    {
+        List<Goods> goodsContainer = crudOperations.ReadAll();
+
+        return GetAllIDs(goodsContainer);
+    }
+
+    private List<ObjectId> GetAllIDs(List<Goods> goods)
+    {
+        List<ObjectId> IDs = new();
+
+        foreach (var item in goods)
+        {
+            IDs.Add(item.Id);
+        }
+
+        return IDs;
     }
 }

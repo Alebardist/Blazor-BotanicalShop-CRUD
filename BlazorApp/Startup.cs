@@ -22,7 +22,7 @@ namespace BlazorApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddTransient<ICrudOperator, CrudOperator>();
+            services.AddSingleton<ICrudOperator>(new CrudOperator(Configuration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

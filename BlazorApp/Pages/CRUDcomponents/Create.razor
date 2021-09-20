@@ -1,4 +1,4 @@
-﻿@inject IConfiguration conf
+﻿@inject ICrudOperator crudOperations
 
 <div class="create-section">
     <h4>
@@ -57,5 +57,5 @@
 @code {
     private Goods _goodsToAdd = new Goods();
 
-    private void CallOperator() => new CrudOperator(conf).CreateAsync(_goodsToAdd);
+    private void CallOperator() => crudOperations.CreateAsync(_goodsToAdd);
 }

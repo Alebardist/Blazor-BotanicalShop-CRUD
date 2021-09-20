@@ -1,4 +1,4 @@
-﻿@inject IConfiguration conf
+﻿@inject ICrudOperator crudOperations
 
 <hr />
 <h3>Read</h3>
@@ -32,13 +32,8 @@
 @code {
     private List<Goods> _goodsContainer = new List<Goods>();
 
-    public Read()
-    {
-        RefreshRecords();
-    }
-
     private void RefreshRecords()
     {
-        _goodsContainer = new CrudOperator(conf).ReadAll();
+        _goodsContainer = crudOperations.ReadAll();
     }
 }
